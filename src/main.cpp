@@ -8,6 +8,10 @@
 
 class Foo {
 
+    public:
+        static uint32_t moved;
+        static uint32_t copied;
+    
     private:
         static uint32_t uid;
         char* buff{nullptr};
@@ -26,6 +30,7 @@ class Foo {
         }
         Foo(const Foo& other) {
             id = uid++;
+            copied++;
             size = other.size;
             buff = new char[size];
             for (uint32_t i = 0; i < size; i++) {
@@ -35,6 +40,7 @@ class Foo {
         }
         Foo(Foo&& other) {
             id = uid++;
+            moved++;
             size = other.size;
             buff = other.buff;
             other.buff = nullptr;
@@ -43,6 +49,7 @@ class Foo {
         }
         Foo& operator=(const Foo& other) {
             if (this != &other){
+                copied++;
                 if (buff) {delete [] buff;}
                 size = other.size;
                 buff = new char[size];
@@ -55,6 +62,7 @@ class Foo {
         }
         Foo& operator=(Foo&& other) {
             if (this != &other) {
+                moved++;
                 if (buff) { delete [] buff; }
                 size = other.size;
                 buff = other.buff;
@@ -81,6 +89,8 @@ std::ostream& operator<<(std::ostream& out, const Foo & f) {
 }
 
 uint32_t Foo::uid = 1;
+uint32_t Foo::moved = 0;
+uint32_t Foo::copied = 0;
 
 int main() {
 
@@ -110,31 +120,34 @@ int main() {
     printCurrentMemory();
     */
 
-    // {
-    //     printCurrentMemory();
+    {
+        printCurrentMemory();
 
-    //     arr_stack::Stack<Foo> s;
+        arr_stack::Stack<Foo> s;
 
-    //     Foo f1("Hello", 6);
-    //     std::cout << s;
-    //     s.add(f1);
-    //     s.print();
-    //     s.pop();
-    //     s.print();
-    //     for (int i = 0; i < 50; i++) {
-    //         s.add(f1);
-    //     }
-    //     s.print();
-    //     for (int i = 0; i < 50; i++) {
-    //         s.pop();
-    //         s.print();
-    //     }
-    //     s.print();
+        Foo f1("Hello", 6);
+        std::cout << s;
+        s.add(f1);
+        s.print();
+        s.pop();
+        s.print();
+        for (int i = 0; i < 50; i++) {
+            s.add(f1);
+        }
+        s.print();
+        for (int i = 0; i < 50; i++) {
+            s.pop();
+            s.print();
+        }
+        s.print();
 
-    //     printCurrentMemory();
-    // }
+        printCurrentMemory();
+    }
 
     printCurrentMemory();
+
+    std::cout << "Total copied objects: " << Foo::copied << "\n";
+    std::cout << "Total moved objects: " << Foo::moved << "\n";
 
     return 0;
 }
