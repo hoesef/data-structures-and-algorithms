@@ -120,28 +120,45 @@ int main() {
     printCurrentMemory();
     */
 
+    // {
+    //     printCurrentMemory();
+
+    //     arr_stack::Stack<Foo> s;
+
+    //     Foo f1("Hello", 6);
+    //     std::cout << s;
+    //     s.add(f1);
+    //     s.print();
+    //     s.pop();
+    //     s.print();
+    //     for (int i = 0; i < 50; i++) {
+    //         s.add(f1);
+    //     }
+    //     s.print();
+    //     for (int i = 0; i < 50; i++) {
+    //         s.pop();
+    //         s.print();
+    //     }
+    //     s.print();
+
+    //     printCurrentMemory();
+    // }
+
     {
         printCurrentMemory();
-
-        arr_stack::Stack<Foo> s;
-
-        Foo f1("Hello", 6);
-        std::cout << s;
-        s.add(f1);
-        s.print();
-        s.pop();
+        arr_stack::Stack<int> s;
         s.print();
         for (int i = 0; i < 50; i++) {
-            s.add(f1);
+            s.add(i+1);
         }
         s.print();
+        printCurrentMemory();
         for (int i = 0; i < 50; i++) {
             s.pop();
             s.print();
         }
-        s.print();
-
         printCurrentMemory();
+
     }
 
     printCurrentMemory();

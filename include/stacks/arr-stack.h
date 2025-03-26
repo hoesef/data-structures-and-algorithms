@@ -97,18 +97,20 @@ template <typename T> class Stack {
         void print() {
             std::cout << "Elements: " << (m_end) << " size: " << m_size << "\n";
             std::cout << "[";
-            for (uint32_t i = 0; i < m_end; i++) {
-                std::cout << m_ptr[i];
-                if (i + 1 != m_end) { std::cout << ", "; }
+            uint32_t i = m_end;
+            while (i) {
+                std::cout << m_ptr[--i];
+                if (i) { std::cout << ", "; }
             }
             std::cout << "]\n";
         }
         friend std::ostream& operator<<(std::ostream& out, const Stack<T>& stack) {
             out << "Elements: " << (stack.m_end) << " size: " << stack.m_size << "\n";
             out << "[";
-            for (uint32_t i = 0; i < stack.m_end; i++) {
-                out << stack.m_ptr[i];
-                if (i + 1 != stack.m_end) { out << ", "; }
+            uint32_t i = stack.m_end;
+            while (i) {
+                out << stack.m_ptr[--i];
+                if (i) { out << ", "; }
             }
             out << "]\n";
             return out;
