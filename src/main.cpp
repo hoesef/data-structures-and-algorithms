@@ -2,8 +2,9 @@
 #include <string>
 #include <cstdint>
 
-#include "..\include\queues\arr-queue.h"
 #include "..\include\allocation-metrics\allocation-metrics.h"
+// #include "..\include\queues\arr-queue.h"
+#include "..\include\stacks\arr-stack.h"
 
 class Foo {
 
@@ -83,20 +84,57 @@ uint32_t Foo::uid = 1;
 
 int main() {
 
+    std::cout << "\n\n";
+    
+    /*
     {
         arr_queue::Queue<Foo> q;
 
         Foo f1("Hello", 6);
         q.add(f1);
         std::cout << f1 << "\n";
-        std::cout << q.pop() << "\n";
+        // std::cout << q.pop() << "\n";
         printCurrentMemory();
 
+        std::cout << "Q was: ";
         q.print();
 
+        arr_queue::Queue<Foo> q2;
+        q2 = std::move(q);
+        std::cout << "Made q1, q is now: ";
+        q.print();
+        std::cout << "q2 is: ";
+        q2.print();
     }
 
     printCurrentMemory();
-    
+    */
+
+    // {
+    //     printCurrentMemory();
+
+    //     arr_stack::Stack<Foo> s;
+
+    //     Foo f1("Hello", 6);
+    //     std::cout << s;
+    //     s.add(f1);
+    //     s.print();
+    //     s.pop();
+    //     s.print();
+    //     for (int i = 0; i < 50; i++) {
+    //         s.add(f1);
+    //     }
+    //     s.print();
+    //     for (int i = 0; i < 50; i++) {
+    //         s.pop();
+    //         s.print();
+    //     }
+    //     s.print();
+
+    //     printCurrentMemory();
+    // }
+
+    printCurrentMemory();
+
     return 0;
 }
