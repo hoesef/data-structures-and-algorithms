@@ -6,7 +6,7 @@ Each data structure is written using tempaltes to allow them to contain any type
 ## Installing
 The repo can be clones using the following command:
 ```git
-git clone https://www.github.com/hoesef/data-structures-and-algorithms.git"
+git clone https://github.com/hoesef/data-structures-and-algorithms.git"
 
 cd data-structures-and-algorithms
 ```
