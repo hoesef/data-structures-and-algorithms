@@ -34,7 +34,7 @@ template <typename T> class Queue {
             unsigned int index;
             for (unsigned int i = 0; i < m_elements; i++) {
                 index = (other.m_start + i) % m_size;
-                new (&m_ptr[i]) T(std::move(other.m_ptr[index]));           // move data into memory 
+                new (&m_ptr[i]) T(other.m_ptr[index]);                      // copy data into memory 
             }
         }
         // Move constructor
@@ -73,7 +73,7 @@ template <typename T> class Queue {
                 unsigned int index;
                 for (unsigned int i = 0; i < m_elements; i++) {
                     index = (other.m_start + i) % other.m_size;
-                    new (&m_ptr[i]) T(std::move(other.m_ptr[index]));       // move data into memory
+                    new (&m_ptr[i]) T(other.m_ptr[index]);                  // copy data into memory
                 }
             }
             return *this;
