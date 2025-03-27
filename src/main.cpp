@@ -5,6 +5,7 @@
 #include "..\include\allocation-metrics\allocation-metrics.h"
 // #include "..\include\queues\arr-queue.h"
 #include "..\include\stacks\arr-stack.h"
+#include "..\include\stacks\ll-stack.h"
 
 class Foo {
 
@@ -94,71 +95,26 @@ uint32_t Foo::copied = 0;
 
 int main() {
 
+    std::cout << sizeof(ll_stack::Node<int>) << "\n";
+    std::cout << sizeof(int) << "\n";
+    std::cout << sizeof(ll_stack::Node<int>*);
+
     std::cout << "\n\n";
-    
-    /*
     {
-        arr_queue::Queue<Foo> q;
+    ll_stack::Stack<int> s;
+    s.print();
+    s.add(5);
+    s.print();
+    s.pop();
+    s.print();
 
-        Foo f1("Hello", 6);
-        q.add(f1);
-        std::cout << f1 << "\n";
-        // std::cout << q.pop() << "\n";
-        printCurrentMemory();
-
-        std::cout << "Q was: ";
-        q.print();
-
-        arr_queue::Queue<Foo> q2;
-        q2 = std::move(q);
-        std::cout << "Made q1, q is now: ";
-        q.print();
-        std::cout << "q2 is: ";
-        q2.print();
+    for (int i = 0; i < 50; i++) {
+        s.add(i+1);
     }
 
     printCurrentMemory();
-    */
 
-    // {
-    //     printCurrentMemory();
-
-    //     arr_stack::Stack<Foo> s;
-
-    //     Foo f1("Hello", 6);
-    //     std::cout << s;
-    //     s.add(f1);
-    //     s.print();
-    //     s.pop();
-    //     s.print();
-    //     for (int i = 0; i < 50; i++) {
-    //         s.add(f1);
-    //     }
-    //     s.print();
-    //     for (int i = 0; i < 50; i++) {
-    //         s.pop();
-    //         s.print();
-    //     }
-    //     s.print();
-
-    //     printCurrentMemory();
-    // }
-
-    {
-        printCurrentMemory();
-        arr_stack::Stack<int> s;
-        s.print();
-        for (int i = 0; i < 50; i++) {
-            s.add(i+1);
-        }
-        s.print();
-        printCurrentMemory();
-        for (int i = 0; i < 50; i++) {
-            s.pop();
-            s.print();
-        }
-        printCurrentMemory();
-
+    s.print();
     }
 
     printCurrentMemory();
