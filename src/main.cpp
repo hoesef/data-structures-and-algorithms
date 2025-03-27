@@ -3,8 +3,7 @@
 #include <cstdint>
 
 #include "..\include\allocation-metrics\allocation-metrics.h"
-// #include "..\include\queues\arr-queue.h"
-#include "..\include\stacks\arr-stack.h"
+#include "..\include\smart-pointers\unique-pointer.h"
 
 class Foo {
 
@@ -96,58 +95,25 @@ int main() {
 
     std::cout << "\n\n";
     
-    /*
+    printCurrentMemory();
     {
-        arr_queue::Queue<Foo> q;
+        smrt_ptr::Unique_pointer<Foo> ptr1 = smrt_ptr::make_unique<Foo>("Hello", 6);
+        smrt_ptr::Unique_pointer<Foo> ptr2 = smrt_ptr::make_unique<Foo>("world", 6);
 
-        Foo f1("Hello", 6);
-        q.add(f1);
-        std::cout << f1 << "\n";
-        // std::cout << q.pop() << "\n";
-        printCurrentMemory();
+        std::cout << *ptr1 << " " << *ptr2 << "\n";
 
-        std::cout << "Q was: ";
-        q.print();
+        ptr1.swap(ptr2);
 
-        arr_queue::Queue<Foo> q2;
-        q2 = std::move(q);
-        std::cout << "Made q1, q is now: ";
-        q.print();
-        std::cout << "q2 is: ";
-        q2.print();
+        std::cout << *ptr1 << " " << *ptr2 << "\n";
+
+        std::cout << "ptr1: " << ptr1->getStr() << "\n";
+        std::cout << "ptr2: " << ptr2->getStr() << "\n";
+
+        ptr1.~Unique_pointer();
+
     }
 
     printCurrentMemory();
-    */
-
-    {
-        printCurrentMemory();
-
-        arr_stack::Stack<Foo> s;
-
-        Foo f1("Hello", 6);
-        std::cout << s;
-        s.add(f1);
-        s.print();
-        s.pop();
-        s.print();
-        for (int i = 0; i < 50; i++) {
-            s.add(f1);
-        }
-        s.print();
-        for (int i = 0; i < 50; i++) {
-            s.pop();
-            s.print();
-        }
-        s.print();
-
-        printCurrentMemory();
-    }
-
-    printCurrentMemory();
-
-    std::cout << "Total copied objects: " << Foo::copied << "\n";
-    std::cout << "Total moved objects: " << Foo::moved << "\n";
 
     return 0;
 }
