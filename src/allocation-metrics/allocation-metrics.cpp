@@ -23,13 +23,13 @@ void* operator new[](size_t size) {
 }
 
 void operator delete(void* memory, size_t size) {
-    std::cout << "Freeing " << size << " bytes";
+    std::cout << "Freeing " << size << " bytes\n";
     s_AllocationMetrics.totalDeallocated += size;
     free(memory);
 }
 
 void operator delete[](void* memory, size_t size) {
-    std::cout << "Freeing " << size << " bytes";
+    std::cout << "Freeing " << size << " bytes\n";
     s_AllocationMetrics.totalDeallocated += size;
     free(memory);
 }
