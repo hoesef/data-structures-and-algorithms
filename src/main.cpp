@@ -4,6 +4,7 @@
 
 #include "..\include\allocation-metrics\allocation-metrics.h"
 #include "..\include\smart-pointers\unique-pointer.h"
+#include "..\include\smart-pointers\shared-pointer.h"
 
 class Foo {
 
@@ -96,21 +97,54 @@ int main() {
     std::cout << "\n\n";
     
     printCurrentMemory();
+
+    // {
+    //     smrt_ptr::Unique_pointer<Foo> ptr1 = smrt_ptr::make_unique<Foo>("Hello", 6);
+    //     smrt_ptr::Unique_pointer<Foo> ptr2 = smrt_ptr::make_unique<Foo>("world", 6);
+
+    //     std::cout << *ptr1 << " " << *ptr2 << "\n";
+
+    //     ptr1.swap(ptr2);
+
+    //     std::cout << *ptr1 << " " << *ptr2 << "\n";
+
+    //     std::cout << "ptr1: " << ptr1->getStr() << "\n";
+    //     std::cout << "ptr2: " << ptr2->getStr() << "\n";
+
+    //     ptr1.~Unique_pointer();
+
+    // }
+
     {
-        smrt_ptr::Unique_pointer<Foo> ptr1 = smrt_ptr::make_unique<Foo>("Hello", 6);
-        smrt_ptr::Unique_pointer<Foo> ptr2 = smrt_ptr::make_unique<Foo>("world", 6);
+        smrt_ptr::Shared_pointer<Foo> shrd_ptr = smrt_ptr::make_shared<Foo>("Hello", 6);
+        std::cout << *shrd_ptr << "\n";
+        {
+            smrt_ptr::Shared_pointer<Foo> shrd_ptr2(shrd_ptr);
+            std::cout << *shrd_ptr2 << "\n";
+            shrd_ptr.reset(new Foo("world", 6));
+            shrd_ptr.swap(shrd_ptr2);
 
-        std::cout << *ptr1 << " " << *ptr2 << "\n";
+            std::cout << shrd_ptr->getStr() << " " << shrd_ptr2->getStr() << "\n";
 
-        ptr1.swap(ptr2);
+            std::cout << "Foo obj 1 ref count: " << shrd_ptr.use_count() << "\n";
+            std::cout << "shrd_ptr is unique: " << shrd_ptr.unique() << "\n";
 
-        std::cout << *ptr1 << " " << *ptr2 << "\n";
+            smrt_ptr::Shared_pointer<Foo> shrd_ptr3;
+            shrd_ptr3 = shrd_ptr;
+            smrt_ptr::Shared_pointer<Foo> shrd_ptr4(shrd_ptr3);
+            
+            std::cout << "Foo obj 1 ref count: " << shrd_ptr.use_count() << "\n";
+            std::cout << "shrd_ptr is unique: " << shrd_ptr.unique() << "\n";
 
-        std::cout << "ptr1: " << ptr1->getStr() << "\n";
-        std::cout << "ptr2: " << ptr2->getStr() << "\n";
+            printCurrentMemory();
 
-        ptr1.~Unique_pointer();
+        }
 
+        std::cout << "Foo obj 1 ref count: " << shrd_ptr.use_count() << "\n";
+        std::cout << "shrd_ptr is unique: " << shrd_ptr.unique() << "\n";
+
+
+        std::cout << *(shrd_ptr.get()) << "\n";
     }
 
     printCurrentMemory();
